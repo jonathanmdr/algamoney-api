@@ -70,6 +70,13 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
+        <!-- Get errors origined by exceptions -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+
         <!-- Aplicate simple verbosity -->
         <dependency>
             <groupId>org.projectlombok</groupId>
