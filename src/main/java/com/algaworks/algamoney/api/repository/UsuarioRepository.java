@@ -1,4 +1,4 @@
-package com.algaworks.algamoney.api.repository.lancamento;
+package com.algaworks.algamoney.api.repository;
 
 import com.algaworks.algamoney.api.model.Usuario;
 import java.util.Optional;

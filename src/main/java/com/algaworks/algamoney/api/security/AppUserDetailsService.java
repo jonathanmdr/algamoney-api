@@ -1,7 +1,7 @@
 package com.algaworks.algamoney.api.security;
 
 import com.algaworks.algamoney.api.model.Usuario;
-import com.algaworks.algamoney.api.repository.lancamento.UsuarioRepository;
+import com.algaworks.algamoney.api.repository.UsuarioRepository;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;

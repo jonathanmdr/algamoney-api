@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,11 +47,13 @@ public class LancamentoResource {
     private MessageSource messageSource;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
     public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable) {
         return lancamentoRepository.filtrar(lancamentoFilter, pageable);
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
     public ResponseEntity<Lancamento> criar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response) {
         Lancamento lancamentoSalva = lancamentoService.salvar(lancamento);
 
@@ -60,6 +63,7 @@ public class LancamentoResource {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
     public ResponseEntity<Lancamento> buscarPeloId(@PathVariable Long id) {
         Lancamento lancamento = lancamentoRepository.findOne(id);
 
@@ -68,6 +72,7 @@ public class LancamentoResource {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ROLE_REMOVER_LANCAMENTO') and #oauth2.hasScope('write')")
     public void Remover(@PathVariable Long id) {
         lancamentoRepository.delete(id);
     }
