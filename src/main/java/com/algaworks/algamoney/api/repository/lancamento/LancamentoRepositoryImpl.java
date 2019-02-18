@@ -1,4 +1,4 @@
-package com.algaworks.algamoney.api.repository.lancamento.impl;
+package com.algaworks.algamoney.api.repository.lancamento;
 
 import com.algaworks.algamoney.api.model.metamodel.Categoria_;
 import com.algaworks.algamoney.api.model.Lancamento;
@@ -15,7 +15,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.algaworks.algamoney.api.repository.lancamento.query.LancamentoRepositoryQuery;
 import com.algaworks.algamoney.api.repository.projection.ResumoLancamento;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
