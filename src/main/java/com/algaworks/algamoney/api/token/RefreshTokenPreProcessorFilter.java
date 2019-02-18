@@ -1,5 +1,10 @@
 package com.algaworks.algamoney.api.token;
 
+import static com.algaworks.algamoney.api.token.utils.RefreshTokenProcessorUtils.COOKIE_NAME;
+import static com.algaworks.algamoney.api.token.utils.RefreshTokenProcessorUtils.TOKEN_KEY;
+import static com.algaworks.algamoney.api.token.utils.RefreshTokenProcessorUtils.TOKEN_VALUE;
+import static com.algaworks.algamoney.api.token.utils.RefreshTokenProcessorUtils.URI_TOKEN;
+
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.Filter;
@@ -22,15 +27,6 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class RefreshTokenPreProcessorFilter implements Filter {
 
-    public static final String URI_TOKEN = "/oauth/token";
-    public static final String TOKEN_VALUE = "refresh_token";
-    public static final String TOKEN_KEY = "grant_type";
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -42,7 +38,7 @@ public class RefreshTokenPreProcessorFilter implements Filter {
                 && req.getCookies() != null) {
 
             for (Cookie cookie : req.getCookies()) {
-                if (cookie.getName().equals("refreshToken")) {
+                if (cookie.getName().equals(COOKIE_NAME)) {
                     String refreshToken = cookie.getValue();
                     req = new MyServletRequestWrapper(req, refreshToken);
                 }
@@ -50,11 +46,6 @@ public class RefreshTokenPreProcessorFilter implements Filter {
         }
 
         chain.doFilter(req, response);
-    }
-
-    @Override
-    public void destroy() {
-
     }
 
     static class MyServletRequestWrapper extends HttpServletRequestWrapper {
@@ -73,5 +64,13 @@ public class RefreshTokenPreProcessorFilter implements Filter {
             map.setLocked(true);
             return map;
         }
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
+
+    @Override
+    public void destroy() {
     }
 }

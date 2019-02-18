@@ -1,5 +1,9 @@
 package com.algaworks.algamoney.api.token;
 
+import static com.algaworks.algamoney.api.token.utils.RefreshTokenProcessorUtils.COOKIE_NAME;
+import static com.algaworks.algamoney.api.token.utils.RefreshTokenProcessorUtils.NAME_METHOD_PARAMETER;
+import static com.algaworks.algamoney.api.token.utils.RefreshTokenProcessorUtils.URI_TOKEN;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +32,7 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return returnType.getMethod().getName().equals("postAccessToken");
+        return returnType.getMethod().getName().equals(NAME_METHOD_PARAMETER);
     }
 
     @Override
@@ -53,10 +57,10 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
     }
 
     private void adicionarRefreshTokenNoCookie(String refreshToken, HttpServletRequest req, HttpServletResponse res) {
-        Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
+        Cookie refreshTokenCookie = new Cookie(COOKIE_NAME, refreshToken);
         refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setSecure(algaMoneyApiProperty.getSeguranca().isEnableHttps());
-        refreshTokenCookie.setPath(req.getContextPath() + "/oauth/token");
+        refreshTokenCookie.setPath(req.getContextPath().concat(URI_TOKEN));
         refreshTokenCookie.setMaxAge(2592000);
         res.addCookie(refreshTokenCookie);
     }
