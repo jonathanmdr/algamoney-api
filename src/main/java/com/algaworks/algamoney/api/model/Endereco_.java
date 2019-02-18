@@ -1,6 +1,4 @@
-package com.algaworks.algamoney.api.model.metamodel;
-
-import com.algaworks.algamoney.api.model.Endereco;
+package com.algaworks.algamoney.api.model;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;

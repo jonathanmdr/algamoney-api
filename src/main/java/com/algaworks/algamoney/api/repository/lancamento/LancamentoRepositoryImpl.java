@@ -1,9 +1,9 @@
 package com.algaworks.algamoney.api.repository.lancamento;
 
-import com.algaworks.algamoney.api.model.metamodel.Categoria_;
+import com.algaworks.algamoney.api.model.Categoria_;
 import com.algaworks.algamoney.api.model.Lancamento;
-import com.algaworks.algamoney.api.model.metamodel.Lancamento_;
-import com.algaworks.algamoney.api.model.metamodel.Pessoa_;
+import com.algaworks.algamoney.api.model.Lancamento_;
+import com.algaworks.algamoney.api.model.Pessoa_;
 import com.algaworks.algamoney.api.repository.filter.LancamentoFilter;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +46,7 @@ public class LancamentoRepositoryImpl  implements LancamentoRepositoryQuery {
     public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable) {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<ResumoLancamento> criteria = builder.createQuery(ResumoLancamento.class);
+
         Root<Lancamento> root = criteria.from(Lancamento.class);
 
         criteria.select(builder.construct(ResumoLancamento.class,

@@ -12,13 +12,19 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.catalina.util.ParameterMap;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+@Profile("oauth-security")
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class RefreshTokenPreProcessorFilter implements Filter {
+
+    public static final String URI_TOKEN = "/oauth/token";
+    public static final String TOKEN_VALUE = "refresh_token";
+    public static final String TOKEN_KEY = "grant_type";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -31,8 +37,8 @@ public class RefreshTokenPreProcessorFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
 
-        if ("/oauth/token".equalsIgnoreCase(req.getRequestURI())
-                && "refresh_token".equals(req.getParameter("grant_type"))
+        if (URI_TOKEN.equalsIgnoreCase(req.getRequestURI())
+                && TOKEN_VALUE.equals(req.getParameter(TOKEN_KEY))
                 && req.getCookies() != null) {
 
             for (Cookie cookie : req.getCookies()) {
@@ -63,7 +69,7 @@ public class RefreshTokenPreProcessorFilter implements Filter {
         @Override
         public Map<String, String[]> getParameterMap() {
             ParameterMap<String, String[]> map = new ParameterMap<>(getRequest().getParameterMap());
-            map.put("refresh_token", new String[]{refreshToken});
+            map.put(TOKEN_VALUE, new String[]{refreshToken});
             map.setLocked(true);
             return map;
         }
