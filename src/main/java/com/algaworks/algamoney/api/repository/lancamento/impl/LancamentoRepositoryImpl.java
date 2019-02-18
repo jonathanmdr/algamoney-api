@@ -1,9 +1,9 @@
 package com.algaworks.algamoney.api.repository.lancamento.impl;
 
-import com.algaworks.algamoney.api.model.Categoria_;
+import com.algaworks.algamoney.api.model.metamodel.Categoria_;
 import com.algaworks.algamoney.api.model.Lancamento;
-import com.algaworks.algamoney.api.model.Lancamento_;
-import com.algaworks.algamoney.api.model.Pessoa_;
+import com.algaworks.algamoney.api.model.metamodel.Lancamento_;
+import com.algaworks.algamoney.api.model.metamodel.Pessoa_;
 import com.algaworks.algamoney.api.repository.filter.LancamentoFilter;
 import java.util.ArrayList;
 import java.util.List;
