@@ -18,7 +18,7 @@ As funcionalidades acima possuem o CRUD completo, o que possibilita o usuário m
 - API habilitada para funcionar com HTTPS
 - Todas as requisições são movimentadas com accessToken e refreshToken gerenciado pelo OAuth2 com JWT
 
-### Tecnologias utilizadas no projeto
+### Tecnologias utilizadas no projeto:
  - Java 8
  - Spring Boot
  - Spring Data JPA
