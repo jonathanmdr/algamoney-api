@@ -21,8 +21,9 @@ As funcionalidades acima possuem o CRUD completo, o que possibilita o usuário m
 
 ### Segurança da API:
 - Cadastro de usuário
-- Cadastro de permissões de acesso
-- Cadastro de permissões de acesso x usuário
+- Cadastro de permissões de acesso (Roles)
+- Cadastro de permissões de acesso x usuário (Roles by user)
+- Escopo de acesso (Read/Write)
 
 A API está habilitada para funcionar com HTTPS e todas as requisições são movimentadas com AccessToken e RefreshToken gerenciado pelo OAuth2 com JWT.
 
