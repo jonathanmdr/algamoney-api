@@ -23,8 +23,8 @@ As funcionalidades acima possuem o CRUD completo, o que possibilita o usuário m
 - Cadastro de usuário
 - Cadastro de permissões de acesso
 - Cadastro de permissões de acesso x usuário
-- API habilitada para funcionar com HTTPS
-- Todas as requisições são movimentadas com accessToken e refreshToken gerenciado pelo OAuth2 com JWT
+
+A API está habilitada para funcionar com HTTPS e todas as requisições são movimentadas com AccessToken e RefreshToken gerenciado pelo OAuth2 com JWT.
 
 ### Tecnologias utilizadas no projeto:
  - Java 8
