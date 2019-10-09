@@ -12,19 +12,18 @@ CREATE TABLE lancamento (
 	FOREIGN KEY(idpessoa) REFERENCES pessoa(id)
 );
 
-INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa)
-VALUES ('Salário mensal', '2017-06-10', null, 6500.00, 'Distribuição de lucros', 'RECEITA', 1, 1),
-       ('Bahamas', '2017-02-10', '2017-02-10', 100.32, null, 'DESPESA', 2, 2),
-       ('Top Club', '2017-06-10', null, 120, null, 'RECEITA', 3, 3),
-       ('CEMIG', '2017-02-10', '2017-02-10', 110.44, 'Geração', 'RECEITA', 3, 4),
-       ('DMAE', '2017-06-10', null, 200.30, null, 'DESPESA', 3, 5),
-       ('Extra', '2017-03-10', '2017-03-10', 1010.32, null, 'RECEITA', 4, 1),
-       ('Bahamas', '2017-06-10', null, 500, null, 'RECEITA', 1, 2),
-       ('Top Club', '2017-03-10', '2017-03-10', 400.32, null, 'DESPESA', 4, 3),
-       ('Despachante', '2017-06-10', null, 123.64, 'Multas', 'DESPESA', 3, 4),
-       ('Pneus', '2017-04-10', '2017-04-10', 665.33, null, 'RECEITA', 5, 5),
-       ('Café', '2017-06-10', null, 8.32, null, 'DESPESA', 1, 1),
-       ('Eletrônicos', '2017-04-10', '2017-04-10', 2100.32, null, 'DESPESA', 5, 2),
-       ('Instrumentos', '2017-06-10', null, 1040.32, null, 'DESPESA', 4, 3),
-       ('Café', '2017-04-10', '2017-04-10', 4.32, null, 'DESPESA', 4, 4),
-       ('Lanche', '2017-06-10', null, 10.20, null, 'DESPESA', 4, 5);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Salário mensal', '2018-01-27', null, 6500.00, 'Distribuição de lucros', 'RECEITA', 1, 1);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Supermercado', '2018-03-10', '2018-03-01', 100.32, null, 'DESPESA', 2, 2);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Academia', '2018-04-10', null, 120, null, 'DESPESA', 3, 3);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Conta de luz', '2018-02-10', '2018-02-10', 110.44, null, 'DESPESA', 3, 4);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Conta de água', '2018-02-15', null, 200.30, null, 'DESPESA', 3, 5);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Restaurante', '2018-03-14', '2018-03-14', 1010.32, null, 'DESPESA', 4, 6);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Venda vídeo game', '2018-01-01', null, 500, null, 'RECEITA', 1, 7);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Clube', '2018-03-07', '2018-03-05', 400.32, null, 'DESPESA', 4, 8);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Impostos', '2018-04-10', null, 123.64, 'Multas', 'DESPESA', 3, 9);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Multa', '2018-04-10', null, 665.33, null, 'DESPESA', 5, 10);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Padaria', '2018-02-28', '2018-02-28', 8.32, null, 'DESPESA', 1, 5);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Papelaria', '2018-02-10', '2018-04-10', 2100.32, null, 'DESPESA', 5, 4);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Almoço', '2018-03-09', null, 1040.32, null, 'DESPESA', 4, 3);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Café', '2018-02-20', '2018-02-18', 4.32, null, 'DESPESA', 4, 2);
+INSERT INTO lancamento (descricao, data_vencimento, data_pagamento, valor, observacao, tipo, idcategoria, idpessoa) values ('Lanche', '2018-04-10', null, 10.20, null, 'DESPESA', 4, 1);

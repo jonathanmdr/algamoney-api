@@ -1,5 +1,7 @@
 package com.algaworks.algamoney.api.resource;
 
+import com.algaworks.algamoney.api.dto.LancamentoEstatisticaCategoria;
+import com.algaworks.algamoney.api.dto.LancamentoEstatisticaDia;
 import com.algaworks.algamoney.api.event.RecursoCriadoEvent;
 import com.algaworks.algamoney.api.exceptionhandler.AlgamoneyExceptionHandler.Erro;
 import com.algaworks.algamoney.api.model.Lancamento;
@@ -8,6 +10,8 @@ import com.algaworks.algamoney.api.repository.filter.LancamentoFilter;
 import com.algaworks.algamoney.api.repository.projection.ResumoLancamento;
 import com.algaworks.algamoney.api.service.LancamentoService;
 import com.algaworks.algamoney.api.service.exception.PessoaInexistenteOuInativaException;
+
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +43,17 @@ public class LancamentoResource {
     @Autowired
     private MessageSource messageSource;
 
+    @GetMapping("/estatisticas/por-dia")
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+    public List<LancamentoEstatisticaDia> porDia() {
+        return lancamentoRepository.porDia(LocalDate.now());
+    }
+
+    @GetMapping("/estatisticas/por-categoria")
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+    public List<LancamentoEstatisticaCategoria> porCategoria() {
+        return lancamentoRepository.porCategoria(LocalDate.now());
+    }
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")

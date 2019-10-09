@@ -16,4 +16,9 @@ VALUES ('Jonathan Henrique Medeiros', 'Rua Anibal Bonato', '292', 'Ap 01', 'São
        ('Jonathan Angeli', 'Rua Anibal Bonato', '292', 'Ap 01', 'São Francisco Xavier', '85.660-000', 'Dois Vizinhos', 'PR', TRUE),
        ('Alcides Medeiros', 'Av. Ascânio M. de Carvalho', '1091', 'Casa Fundos', 'Centro', '85.4400-000', 'Ubiratã', 'PR', TRUE),
        ('Margarida Medeiros', 'Av. Ascânio M. de Carvalho', '1091', 'Casa Fundos', 'Centro', '85.440-000', 'Ubiratã', 'PR', TRUE),
-       ('Guilherme Medeiros', 'Av. Ascânio M. de Carvalho', '1091', 'Casa Fundos', 'Centro', '85.440-000', 'Ubiratã', 'PR', TRUE);
+       ('Guilherme Medeiros', 'Av. Ascânio M. de Carvalho', '1091', 'Casa Fundos', 'Centro', '85.440-000', 'Ubiratã', 'PR', TRUE),
+       ('Marcelo Oliveira', 'Av. Ascânio M. de Carvalho', '1091', 'Casa Fundos', 'Centro', '85.440-000', 'Blumenau', 'SC', TRUE),
+       ('Marlon Pedroso', 'Av. Ascânio M. de Carvalho', '1091', 'Casa Fundos', 'Centro', '85.440-000', 'Blumenau', 'SC', TRUE),
+       ('Suzane Santana', 'Av. Ascânio M. de Carvalho', '1091', 'Casa Fundos', 'Centro', '85.440-000', 'Blumenau', 'SC', TRUE),
+       ('Gabriel Bernardi', 'Av. Ascânio M. de Carvalho', '1091', 'Casa Fundos', 'Centro', '85.440-000', 'Blumenau', 'SC', TRUE),
+       ('Mineia Maschio', 'Av. Ascânio M. de Carvalho', '1091', 'Casa Fundos', 'Centro', '85.440-000', 'Blumenau', 'SC', TRUE);
