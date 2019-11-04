@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 @Component
@@ -56,6 +57,15 @@ public class S3 {
             throw  new RuntimeException("Não foi possível enviar o arquivo para o AWS Bucket S3.", ex);
         }
 
+    }
+
+    public void salvarPermanente(String nomeArquivo) {
+        SetObjectTaggingRequest setObjectTaggingRequest = new SetObjectTaggingRequest(
+                property.getS3().getBucket(),
+                nomeArquivo,
+                new ObjectTagging(Collections.emptyList()));
+
+        amazonS3.setObjectTagging(setObjectTaggingRequest);
     }
 
     public String configurarUrl(String nomeArquivo) {

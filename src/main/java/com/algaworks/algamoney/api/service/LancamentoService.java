@@ -9,6 +9,7 @@ import com.algaworks.algamoney.api.repository.LancamentoRepository;
 import com.algaworks.algamoney.api.repository.PessoaRepository;
 import com.algaworks.algamoney.api.repository.UsuarioRepository;
 import com.algaworks.algamoney.api.service.exception.PessoaInexistenteOuInativaException;
+import com.algaworks.algamoney.api.storage.S3;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -19,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.io.InputStream;
 import java.sql.Date;
@@ -46,6 +48,9 @@ public class LancamentoService {
 
     @Autowired
     private Mailer mailer;
+
+    @Autowired
+    private S3 s3;
 
     @Scheduled(cron = "0 0 6 * * *")
     public void avisarSobreLancamentosVencidos() {
@@ -89,28 +94,28 @@ public class LancamentoService {
     }
 
     public Lancamento salvar(Lancamento lancamento) {
-        Pessoa pessoa = pessoaRepository.findOne(lancamento.getPessoa().getId());
+        Pessoa pessoa = validaERetornaPessoa(lancamento);
 
-        if (pessoa == null || pessoa.isInativo()) {
-            throw new PessoaInexistenteOuInativaException();
+        if (StringUtils.hasText(lancamento.getAnexo())) {
+            s3.salvarPermanente(lancamento.getAnexo());
         }
 
         return lancamentoRepository.save(lancamento);
     }
 
     public Lancamento atualizar(Long id, Lancamento lancamento) {
-        Lancamento lancamento1Salvo = buscarLancamentoExistente(id);
+        Lancamento lancamentoSalvo = buscarLancamentoExistente(id);
 
-        if (!lancamento.getPessoa().equals(lancamento1Salvo.getPessoa())) {
-            validarPessoa(lancamento);
+        if (!lancamento.getPessoa().equals(lancamentoSalvo.getPessoa())) {
+            validaERetornaPessoa(lancamento);
         }
 
-        BeanUtils.copyProperties(lancamento, lancamento1Salvo, "id");
+        BeanUtils.copyProperties(lancamento, lancamentoSalvo, "id");
 
-        return lancamentoRepository.save(lancamento1Salvo);
+        return lancamentoRepository.save(lancamentoSalvo);
     }
 
-    private void validarPessoa(Lancamento lancamento) {
+    private Pessoa validaERetornaPessoa(Lancamento lancamento) {
         Pessoa pessoa = null;
 
         if (lancamento.getPessoa().getId() != null) {
@@ -120,6 +125,8 @@ public class LancamentoService {
         if (pessoa == null || pessoa.isInativo()) {
             throw new PessoaInexistenteOuInativaException();
         }
+
+        return pessoa;
     }
 
     private Lancamento buscarLancamentoExistente(Long id) {
