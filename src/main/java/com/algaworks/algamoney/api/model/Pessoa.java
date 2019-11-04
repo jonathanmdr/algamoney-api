@@ -1,6 +1,7 @@
 package com.algaworks.algamoney.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,6 +39,7 @@ public class Pessoa {
         return !this.ativo;
     }
 
+    @JsonIgnoreProperties("pessoa")
     @Valid
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
     private List<Contato> contatos;
