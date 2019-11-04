@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,6 +55,7 @@ public class Lancamento {
     @JoinColumn(name = "idcategoria")
     private Categoria categoria;
 
+    @JsonIgnoreProperties("contatos")
     @NotNull
     @ManyToOne
     @JoinColumn(name = "idpessoa")
