@@ -1,10 +1,13 @@
 package com.algaworks.algamoney.api.service;
 
 import com.algaworks.algamoney.api.dto.LancamentoEstatisticaPessoa;
+import com.algaworks.algamoney.api.mail.Mailer;
 import com.algaworks.algamoney.api.model.Lancamento;
 import com.algaworks.algamoney.api.model.Pessoa;
+import com.algaworks.algamoney.api.model.Usuario;
 import com.algaworks.algamoney.api.repository.LancamentoRepository;
 import com.algaworks.algamoney.api.repository.PessoaRepository;
+import com.algaworks.algamoney.api.repository.UsuarioRepository;
 import com.algaworks.algamoney.api.service.exception.PessoaInexistenteOuInativaException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -26,15 +29,26 @@ import java.util.Map;
 @Service
 public class LancamentoService {
 
+    private static final String PERMISSAO_DESTINATARIOS = "ROLE_PESQUISAR_LANCAMENTO";
+
     @Autowired
     private PessoaRepository pessoaRepository;
 
     @Autowired
     private LancamentoRepository lancamentoRepository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private Mailer mailer;
+
     @Scheduled(cron = "0 0 6 * * *")
     public void avisarSobreLancamentosVencidos() {
-        System.out.println(">>>>>>>>>>> AIOI CARAIO AHUEHAUEH");
+        List<Lancamento> lancamentosVencidos = lancamentoRepository.findByDataVencimentoLessThanEqualAndDataPagamentoIsNull(LocalDate.now());
+        List<Usuario> destinatarios = usuarioRepository.findByPermissoesDescricao(PERMISSAO_DESTINATARIOS);
+
+        mailer.avisarSobrelancamentosVencidos(lancamentosVencidos, destinatarios);
     }
 
     public byte[] realtorioPorPessoa(LocalDate inicio, LocalDate fim) throws Exception {
