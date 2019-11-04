@@ -1,6 +1,7 @@
 package com.algaworks.algamoney.api.model;
 
 import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -12,5 +13,6 @@ public abstract class Pessoa_ {
     public static volatile SingularAttribute<Pessoa, Endereco> endereco;
     public static volatile SingularAttribute<Pessoa, String> nome;
     public static volatile SingularAttribute<Pessoa, Long> id;
+    public static volatile ListAttribute<Pessoa, Contato> contatos;
 
 }
