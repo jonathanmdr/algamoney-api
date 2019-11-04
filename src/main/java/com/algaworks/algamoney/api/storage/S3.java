@@ -45,6 +45,8 @@ public class S3 {
                     Arrays.asList(new Tag("expirar", "true"))
             ));
 
+            amazonS3.putObject(putObjectRequest);
+
             if (logger.isDebugEnabled()) {
                 logger.debug("Arquivo {} enviado com sucesso para o S3.", arquivo.getOriginalFilename());
             }
@@ -54,6 +56,10 @@ public class S3 {
             throw  new RuntimeException("Não foi possível enviar o arquivo para o AWS Bucket S3.", ex);
         }
 
+    }
+
+    public String configurarUrl(String nomeArquivo) {
+        return "\\\\"+property.getS3().getBucket()+".s3.amazonaws.com/"+nomeArquivo;
     }
 
     private String gerarNomeunicoArquivo(String originalFilename) {

@@ -1,5 +1,6 @@
 package com.algaworks.algamoney.api.resource;
 
+import com.algaworks.algamoney.api.dto.Anexo;
 import com.algaworks.algamoney.api.dto.LancamentoEstatisticaCategoria;
 import com.algaworks.algamoney.api.dto.LancamentoEstatisticaDia;
 import com.algaworks.algamoney.api.event.RecursoCriadoEvent;
@@ -20,6 +21,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.algaworks.algamoney.api.storage.S3;
 import net.sf.jasperreports.engine.util.FileBufferedOutputStream;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,13 +55,14 @@ public class LancamentoResource {
     @Autowired
     private MessageSource messageSource;
 
+    @Autowired
+    private S3 s3;
+
     @PostMapping("/anexo")
     @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
-    public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
-        OutputStream out = new FileOutputStream("/Users/User/Desktop/anexo--"+anexo.getOriginalFilename());
-        out.write(anexo.getBytes());
-        out.close();
-        return "OK";
+    public Anexo uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+        String nomeArquivo = s3.salvarTemporariamente(anexo);
+        return new Anexo(nomeArquivo, s3.configurarUrl(nomeArquivo));
     }
 
     @GetMapping("/relatorios/por-pessoa")
