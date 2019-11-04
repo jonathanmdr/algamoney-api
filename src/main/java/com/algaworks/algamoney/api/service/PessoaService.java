@@ -15,6 +15,9 @@ public class PessoaService {
 
     public Pessoa atualizar(Long id, Pessoa pessoa) {
         Pessoa pessoaSalva = buscaPessoaPorId(id);
+
+        pessoa.getContatos().forEach(contato -> contato.setPessoa(pessoaSalva));
+
         BeanUtils.copyProperties(pessoa, pessoaSalva, "id");
         return pessoaRepository.save(pessoaSalva);
     }
@@ -31,6 +34,11 @@ public class PessoaService {
             throw new EmptyResultDataAccessException(1);
         }
         return pessoaSalva;
+    }
+
+    public Pessoa salvar(Pessoa pessoa) {
+        pessoa.getContatos().forEach(contato -> contato.setPessoa(pessoa));
+        return pessoaRepository.save(pessoa);
     }
 
 }

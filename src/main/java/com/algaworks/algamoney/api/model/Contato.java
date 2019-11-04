@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -30,7 +29,6 @@ public class Contato {
     @NotEmpty
     private String telefone;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "idpessoa")
     private Pessoa pessoa;
