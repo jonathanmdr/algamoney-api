@@ -11,6 +11,7 @@ public class AlgaMoneyApiProperty {
     private String originPermitida = "http://localhost:8000";
     private final Seguranca seguranca = new Seguranca();
     private final Mail mail = new Mail();
+    private final S3 s3 = new S3();
 
     @Getter
     @Setter
@@ -25,6 +26,14 @@ public class AlgaMoneyApiProperty {
         private Integer port;
         private String username;
         private String password;
+    }
+
+    @Getter
+    @Setter
+    public static class S3 {
+        private String accessKeyId;
+        private String secretAccessKey;
+        private String bucket = "aw-devsoftsta-arquivos";
     }
 
 }
