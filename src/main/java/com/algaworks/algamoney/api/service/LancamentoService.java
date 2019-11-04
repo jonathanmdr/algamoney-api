@@ -13,6 +13,8 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -31,6 +33,8 @@ public class LancamentoService {
 
     private static final String PERMISSAO_DESTINATARIOS = "ROLE_PESQUISAR_LANCAMENTO";
 
+    private static final Logger logger = LoggerFactory.getLogger(LancamentoService.class);
+
     @Autowired
     private PessoaRepository pessoaRepository;
 
@@ -43,12 +47,31 @@ public class LancamentoService {
     @Autowired
     private Mailer mailer;
 
-    @Scheduled(cron = "0 0 6 * * *")
+    //@Scheduled(cron = "0 0 6 * * *")
+    @Scheduled(fixedDelay = 1000 * 60)
     public void avisarSobreLancamentosVencidos() {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Preparando envio de e-mail: Lançamentos Vencidos.");
+        }
+
         List<Lancamento> lancamentosVencidos = lancamentoRepository.findByDataVencimentoLessThanEqualAndDataPagamentoIsNull(LocalDate.now());
+
+        if (lancamentosVencidos.isEmpty()) {
+            logger.info("Não existem lançamentos vencidos para notificar.");
+            return;
+        }
+
+        logger.info("Existem {} lançamentos vencidos para notificar.", lancamentosVencidos.size());
+
         List<Usuario> destinatarios = usuarioRepository.findByPermissoesDescricao(PERMISSAO_DESTINATARIOS);
 
+        if (destinatarios.isEmpty()) {
+            logger.warn("Existem lançamentos vencidos porém não existem usuários com permissão válida para receber a notificação por e-mail.");
+        }
+
         mailer.avisarSobrelancamentosVencidos(lancamentosVencidos, destinatarios);
+
+        logger.info("Envio de e-mail de aviso sobre lançamentos vencidos enviado.");
     }
 
     public byte[] realtorioPorPessoa(LocalDate inicio, LocalDate fim) throws Exception {
