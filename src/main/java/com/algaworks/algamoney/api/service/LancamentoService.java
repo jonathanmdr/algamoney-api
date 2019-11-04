@@ -110,6 +110,12 @@ public class LancamentoService {
             validaERetornaPessoa(lancamento);
         }
 
+        if (StringUtils.isEmpty(lancamento.getAnexo()) && StringUtils.hasText(lancamentoSalvo.getAnexo())) {
+            s3.excluir(lancamentoSalvo.getAnexo());
+        } else if (StringUtils.hasLength(lancamento.getAnexo()) && !lancamento.getAnexo().equals(lancamentoSalvo.getAnexo())) {
+            s3.substituir(lancamentoSalvo.getAnexo(), lancamento.getAnexo());
+        }
+
         BeanUtils.copyProperties(lancamento, lancamentoSalvo, "id");
 
         return lancamentoRepository.save(lancamentoSalvo);
