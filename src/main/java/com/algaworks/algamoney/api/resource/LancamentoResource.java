@@ -11,12 +11,16 @@ import com.algaworks.algamoney.api.repository.projection.ResumoLancamento;
 import com.algaworks.algamoney.api.service.LancamentoService;
 import com.algaworks.algamoney.api.service.exception.PessoaInexistenteOuInativaException;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import net.sf.jasperreports.engine.util.FileBufferedOutputStream;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -31,6 +35,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/lancamentos")
@@ -47,6 +52,15 @@ public class LancamentoResource {
 
     @Autowired
     private MessageSource messageSource;
+
+    @PostMapping("/anexo")
+    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
+    public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+        OutputStream out = new FileOutputStream("/Users/User/Desktop/anexo--"+anexo.getOriginalFilename());
+        out.write(anexo.getBytes());
+        out.close();
+        return "OK";
+    }
 
     @GetMapping("/relatorios/por-pessoa")
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
