@@ -5,6 +5,8 @@ import com.algaworks.algamoney.api.model.Categoria;
 import com.algaworks.algamoney.api.repository.CategoriaRepository;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -44,9 +46,9 @@ public class CategoriaResource {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_CATEGORIA')  and #oauth2.hasScope('read')")
     public ResponseEntity<Categoria> buscarPeloId(@PathVariable Long id) {
-        Categoria categoria = categoriaRepository.findOne(id);
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
 
-        return categoria != null ? ResponseEntity.ok(categoria) : ResponseEntity.notFound().build();
+        return categoria.isPresent() ? ResponseEntity.ok(categoria.get()) : ResponseEntity.notFound().build();
     }
 
 }
