@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PessoaService {
 
@@ -32,11 +34,11 @@ public class PessoaService {
     }
 
     private Pessoa buscaPessoaPorId(Long id) {
-        Pessoa pessoaSalva = pessoaRepository.findOne(id);
-        if (pessoaSalva == null) {
+        Optional<Pessoa> pessoaSalva = pessoaRepository.findById(id);
+        if (!pessoaSalva.isPresent()) {
             throw new EmptyResultDataAccessException(1);
         }
-        return pessoaSalva;
+        return pessoaSalva.get();
     }
 
     public Pessoa salvar(Pessoa pessoa) {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/pessoas")
@@ -48,16 +49,16 @@ public class PessoaResource {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
     public ResponseEntity<Pessoa> buscarPeloId(@PathVariable Long id) {
-        Pessoa pessoa = pessoaRepository.findOne(id);
+        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
 
-        return pessoa != null ? ResponseEntity.ok(pessoa) : ResponseEntity.notFound().build();
+        return pessoa.isPresent() ? ResponseEntity.ok(pessoa.get()) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('ROLE_REMOVER_PESSOA') and #oauth2.hasScope('write')")
     public void remover(@PathVariable Long id) {
-        pessoaRepository.delete(id);
+        pessoaRepository.deleteById(id);
     }
 
     @PutMapping("/{id}")

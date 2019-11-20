@@ -25,10 +25,7 @@ import org.springframework.util.StringUtils;
 import java.io.InputStream;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class LancamentoService {
@@ -125,7 +122,7 @@ public class LancamentoService {
         Pessoa pessoa = null;
 
         if (lancamento.getPessoa().getId() != null) {
-            pessoa = pessoaRepository.findOne(lancamento.getPessoa().getId());
+            pessoa = pessoaRepository.getOne(lancamento.getPessoa().getId());
         }
 
         if (pessoa == null || pessoa.isInativo()) {
@@ -136,12 +133,12 @@ public class LancamentoService {
     }
 
     private Lancamento buscarLancamentoExistente(Long id) {
-        Lancamento lancamentoSalvo = lancamentoRepository.findOne(id);
+        Optional<Lancamento> lancamentoSalvo = lancamentoRepository.findById(id);
 
-        if (lancamentoSalvo == null) {
+        if (!lancamentoSalvo.isPresent()) {
             throw new IllegalArgumentException();
         }
 
-        return lancamentoSalvo;
+        return lancamentoSalvo.get();
     }
 }
